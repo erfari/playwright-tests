@@ -1,37 +1,35 @@
-import time
-from dataclasses import dataclass
-from playwright.sync_api import Page
+from allure_commons._allure import step
+from playwright.sync_api import Browser, Playwright, Page
 
 import allure
 
 
 @allure.description("Base page")
-@dataclass
 class BasePage:
     def __init__(self, page: Page):
         self.page = page
-        self.feed_field = page.get_by_text(" Лента ")
-        self.projects_field = page.get_by_text(" Проекты ")
-        self.registration_field = page.get_by_text(" Регистрация ")
-        self.login_field = page.get_by_text("Войти")
-
-    def go_to_login(self):
-        self.login_field.click()
-
-
-@allure.description("Base page")
-@dataclass
-class LoginPage:
-    def __init__(self, page: Page):
-        self.page = page
+        self.auth = page.locator("//*[contains(a, 'Войти')]")
+        self.projects = page.locator("//*[contains(a, 'Проекты')]")
+        self.popular_projects_list = page.locator("//div[@class='creator-badge-list__container']/creator-badge")
+        self.first_project = page.locator("//*[@class='creator-badge-list__container']/creator-badge[1]//img")
         self.email = page.locator("//input[@name='email']")
         self.password = page.locator("//input[@name='password']")
         self.login_btn = page.locator("//input[@type='submit']")
         self.password_foreign_btn = page.get_by_text("Забыли пароль?")
 
-    def login(self, email: str, password: str):
+    @step('Авторизация пользователя')
+    def login(self, email: str, password: str) -> None:
+        self.auth.click()
         self.email.fill(email)
         self.password.fill(password)
         self.login_btn.click()
-        time.sleep(5)
 
+    @step('Переход на страницу проекта')
+    def go_to_project(self, project_name):
+        self.popular_projects_list.first.wait_for()
+        self.popular_projects_list.first.get_by_text(project_name).click()
+
+    @step('Переход на страницу первого проекта')
+    def go_to_first_project(self):
+        self.popular_projects_list.first.wait_for()
+        self.first_project.click()
