@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","4429","Add to favorite project","tests","Fri Aug 09 21:57:51 MSK 2024","passed","Fri Aug 09 21:57:56 MSK 2024","TestLogin","base_test","",""
+"","2941","Support project","tests","Fri Aug 09 21:57:47 MSK 2024","passed","Fri Aug 09 21:57:50 MSK 2024","TestLogin","base_test","",""
+"","2206","Search project","tests","Fri Aug 09 21:57:43 MSK 2024","passed","Fri Aug 09 21:57:45 MSK 2024","TestLogin","base_test","",""
